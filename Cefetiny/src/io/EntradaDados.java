@@ -11,22 +11,22 @@ import java.nio.file.Paths;
 
 
 public class EntradaDados {
-    private String arquivo;
+    private String strArquivo;
     
     public EntradaDados(){
         
     }
     
-    public void lerArquivo() throws IOException {
+    public void lerArquivo(String arquivo) throws IOException {
         //Arquivo deve estar na pasta Cefetiny, que é a pasta do projeto
-        Path caminho = Paths.get("Arquivo_Texto.txt");
+        Path caminho = Paths.get(arquivo);
         
         try{
             //armazena o arquivo em bytes
             byte[] arquivoBytes = Files.readAllBytes(caminho);
             //transforma o arquivo em bytes em String
             //O arquivo vira uma unica String
-            this.arquivo = new String(arquivoBytes);
+            this.strArquivo = new String(arquivoBytes);
             
         } catch(Exception erro) {
             System.out.println("Erro na leitura de arquivo");
@@ -34,6 +34,6 @@ public class EntradaDados {
     }
     
     public String getArquivo(){
-        return this.arquivo;
+        return this.strArquivo;
     }
 }
