@@ -30,11 +30,8 @@ public class If {
         int i=0;
         if (expressao == true){
             while(comandos.getComandoPosisao(i)!= "endif"){
-                if(comandos.getComandoPosisao(i) == "print"){
-                    //chama comando print
-                }
-                if(comandos.getComandoPosisao(i) == "Println"){
-                    //chama comando print
+                switch (comandos.getComandoPosisao(i)){
+                    case 1 :
                 }
             }
         }
