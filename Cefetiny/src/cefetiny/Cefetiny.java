@@ -10,7 +10,7 @@ public class Cefetiny {
         
         System.out.println("Teste");
         EntradaDados entradaArquivo = new EntradaDados();
-        entradaArquivo.lerArquivo();
+        entradaArquivo.lerArquivo("Arquivo_Texto.txt");
         System.out.println(entradaArquivo.getArquivo());
         
         MemoriaVariaveis memoria = new MemoriaVariaveis();
