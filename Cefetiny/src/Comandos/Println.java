@@ -3,8 +3,8 @@ package Comandos;
 import memoria.MemoriaVariaveis;
 
 public class Println{
-
-    public Println() {
+    
+    public void executaPrintln() {
         System.out.println("\n");
     }
     

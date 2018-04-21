@@ -25,10 +25,10 @@ public class MemoriaComando {
     public void setListaComando(Object comando) {
         ListaComando.add(new Comando (comando));
     }
-    public Object getMetodoPosisao(int i){
+    public Object getComandoPosisao(int i){
         return ListaComando.get(i).metodo;
     }
-    public Object pegaMetodoLista(String nome){
+    public Object pegaComandoLista(String nome){
         Object comando;
         for (int i = 0; i < ListaComando.size();i--) {
             if(ListaComando.get(i).metodo== nome){
@@ -40,5 +40,16 @@ public class MemoriaComando {
         }
         return null;
         
-    }        
+    }  
+    public int getPosicao(String comando){
+            for (int i = 0; i < ListaComando.size();i--){
+                if (ListaComando.get(i).metodo == comando){
+                    return i;
+                }
+            }
+        return 0;
+        }
+    public void tiraPorPosisao(int i){
+        ListaComando.remove(i);
+    }
 }

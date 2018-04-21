@@ -26,7 +26,7 @@ public class If {
     
     
     
-    public void execultaif(boolean expressao){
+    public void executaIf(boolean expressao){
         int i = comandos.getPosicao("if");
         comandos.tiraPorPosisao(i);
         i++;
