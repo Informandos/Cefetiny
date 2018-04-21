@@ -47,7 +47,10 @@ public class MemoriaVariaveis {
          Object Lista = null; 
         if(!ListaVariaveis.isEmpty()){
             for (int i = 0; i < ListaVariaveis.size(); i++) {
-                Lista += "nome : " + ListaVariaveis.get(i).nome + " valor : " + ListaVariaveis.get(i).valor +"\n";
+                if(Lista == null){
+                    Lista = "nome : " + ListaVariaveis.get(i).nome + " valor : " + ListaVariaveis.get(i).valor +"\n";
+                }else
+                    Lista += "nome : " + ListaVariaveis.get(i).nome + " valor : " + ListaVariaveis.get(i).valor +"\n";
             }
  
         }
