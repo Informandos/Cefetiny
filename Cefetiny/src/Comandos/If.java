@@ -11,7 +11,7 @@ import memoria.MemoriaVariaveis;
 
 public class If {
     MemoriaComando comandos = new MemoriaComando();
-
+    
     public If() {
     }
     
@@ -26,14 +26,49 @@ public class If {
     
     
     
-    public void execultaif(boolean expressao){
-        int i=0;
+    public void executaIf(boolean expressao){
+        int i = comandos.getPosicao("if");
+        comandos.tiraPorPosisao(i);
+        i++;
+        int com = 0;
         if (expressao == true){
             while(comandos.getComandoPosisao(i)!= "endif"){
-                switch (comandos.getComandoPosisao(i)){
-                    case 1 :
+                if(comandos.getComandoPosisao(i) == "print"){
+                    //chama comando print
                 }
+                if(comandos.getComandoPosisao(i) == "Println"){
+                 Println print = new Println();
+                 print.executaPrintln();
+                    
+                }
+                if(comandos.getComandoPosisao(i) == "readint"){
+                    //chama readint
+                }
+                if(comandos.getComandoPosisao(i) == "atrib"){
+                    //chama readint
+                }
+                if(comandos.getComandoPosisao(i) == "if"){
+                   // if if
+                }
+                if(comandos.getComandoPosisao(i) == "for"){
+                   // if if
+                }
+                 if(comandos.getComandoPosisao(i) == "while"){
+                   // if if
+                }
+                i++;
             }
+        }
+        else{
+            while(com != 1){
+            if(comandos.getComandoPosisao(i)== "endif"){
+                comandos.tiraPorPosisao(i);
+                com = 1;
+            }
+            else{
+                comandos.tiraPorPosisao(i);
+            }
+           }
         }
     }
 }
