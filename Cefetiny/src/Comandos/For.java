@@ -30,11 +30,12 @@ public class For {
 
     public For() {
     }
-     public void executafor(String nomeVariavel,Object encrementador,Object ultimoValor){
+     public void executafor(String nomeVariavel,String encrementador,int ultimoValor){
          Object j = variaveis.getListaVariaveisvalor(nomeVariavel);
+         int var=Integer.parseInt(j.toString());
          int i = comandos.getPosicao("for");
          if(encrementador == "++"){
-             while(ultimoValor != j){
+             while(ultimoValor != var){
                   if(comandos.getComandoPosisao(i) == "print"){
                     //chama comando print
                 }
@@ -50,8 +51,11 @@ public class For {
                     //chama readint
                 }
                 if(comandos.getComandoPosisao(i) == "if"){
-                   // if if
+                   If comando = new If();
+                   comando.executaIf(true);
+                    //presisa do analisador sintatico
                 }
+                  
                 if(comandos.getComandoPosisao(i) == "for"){
                    // if if
                 }
@@ -59,9 +63,10 @@ public class For {
                    // if if
                 }
                  i++;
+                 var++;
              }
          }else if(encrementador == "--"){
-             while(ultimoValor != j){
+             while(ultimoValor != var){
                   if(comandos.getComandoPosisao(i) == "print"){
                     //chama comando print
                 }
@@ -77,7 +82,9 @@ public class For {
                     //chama readint
                 }
                 if(comandos.getComandoPosisao(i) == "if"){
-                   // if if
+                   If comando = new If();
+                   comando.executaIf(true);
+                    //presisa do analisador sintatico
                 }
                 if(comandos.getComandoPosisao(i) == "for"){
                    // if if
@@ -86,6 +93,7 @@ public class For {
                    // if if
                 }
                  i++;
+                 var++;
              }
          }
     }
