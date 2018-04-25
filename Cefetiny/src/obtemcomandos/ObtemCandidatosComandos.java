@@ -205,8 +205,7 @@ public class ObtemCandidatosComandos {
     public void eAtribuicao() {
         /*
         String pal = "";//palavra atual
-        String aPal = "";//palavra anterior
-        String pPal = "";//proxima palavra
+        
 
         cmds.add("atribuicao");
         cmds.add(aPal);
