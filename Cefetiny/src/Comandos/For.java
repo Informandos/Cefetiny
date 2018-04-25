@@ -45,10 +45,11 @@ public class For {
                     
                 }
                 if(comandos.getComandoPosisao(i) == "readint"){
-                    //chama readint
+                    ReadInt readint = new ReadInt();
+                    //readint.executaReadInt(this); //
                 }
-                if(comandos.getComandoPosisao(i) == "atrib"){
-                    //chama readint
+                if(comandos.getComandoPosisao(i) == "atribuicao"){
+                    //chama atribuicao
                 }
                 if(comandos.getComandoPosisao(i) == "if"){
                    If comando = new If();

@@ -208,12 +208,12 @@ public class ObtemCandidatosComandos {
         
 
         cmds.add("atribuicao");
-        cmds.add(aPal);
+        
         //obtendo proxima palavra
         String expressao = "";
         i++;
         ic = (int) arquivo.charAt(i);
-        while (ic != 9 && ic != 10 && ic != 32) {
+        eEspaco(
             expressao += arquivo.charAt(i);
             ic = (int) arquivo.charAt(i);
             i++;

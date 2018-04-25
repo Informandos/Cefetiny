@@ -42,10 +42,11 @@ public class If {
                     
                 }
                 if(comandos.getComandoPosisao(i) == "readint"){
-                    //chama readint
+                    ReadInt readint = new ReadInt();
+                    //readint.executaReadInt(this); //
                 }
-                if(comandos.getComandoPosisao(i) == "atrib"){
-                    //chama readint
+                if(comandos.getComandoPosisao(i) == "atribuicao"){
+                    //chama atrib
                 }
                 if(comandos.getComandoPosisao(i) == "if"){
                    // if if
