@@ -1,8 +1,14 @@
 package analisadorSemantico;
 
-public class analisadorSemantico{
-
+public class analisadorSemantico{ 
+    
     public analisadorSemantico() {
+    }
+    
+    public void editaExpressao(String expressao){
+       
+        //trocar elementos da string por letras
+        
     }
     
     public void verificaExpressao(Object operando1, Object operador, Object operando2){
