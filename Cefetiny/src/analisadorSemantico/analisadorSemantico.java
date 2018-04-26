@@ -6,9 +6,12 @@ public class analisadorSemantico{
     }
     
     public void editaExpressao(String expressao){
-       
-        //trocar elementos da string por letras
-        
+        expressao.replaceAll("[0-9]", "n");
+        for(int i = 0; i<expressao.length();i++){
+            do{
+                
+            }while(expressao.charAt(i+1))
+        }
     }
     
     public void verificaExpressao(Object operando1, Object operador, Object operando2){
