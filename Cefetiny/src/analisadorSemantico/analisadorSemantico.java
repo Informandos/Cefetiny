@@ -50,7 +50,7 @@ public class analisadorSemantico{
                     //erro
                 }
                 
-                if(operando1 == "0"){
+                if(operando2 == "0"){
                     //erro
                 }
                                         

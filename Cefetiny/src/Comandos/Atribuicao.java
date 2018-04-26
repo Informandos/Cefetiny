@@ -6,7 +6,7 @@ public class Atribuicao{
     
     MemoriaVariaveis variaveis = new MemoriaVariaveis();
     
-    public Atribuicao(Object nome, Object valor) {
+    public void cmdAtribuicao(Object nome, Object valor) {
         
         Object x = variaveis.getListaVariaveisvalor(nome);
         

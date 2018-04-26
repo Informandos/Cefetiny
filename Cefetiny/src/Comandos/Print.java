@@ -2,8 +2,8 @@ package Comandos;
 
 public class Print{
 
-    public Print() {
-        System.out.println();
+    public void cmdPrint() {
+        System.out.print("");
     }
     
 }
