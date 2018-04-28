@@ -1,3 +1,7 @@
 # Cefetiny
-
-Ignora os commits de revert. Acabei fazendo uma bagunça, mas, deu pra consertar.
+Nome dos componentes do grupo: 
+Carlos Henrique Brasileiro
+Eduardo EpiphÃ¢nio Moreira
+Felipe Linhares Afonso
+Juliana Carvalho de Souza
+Lucca Bessa Vieira
