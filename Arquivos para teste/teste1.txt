@@ -1,0 +1,12 @@
+readint(a)
+readint(b)
+
+if (a>b) then
+  result := a-b
+else
+  result := b-a
+endif
+
+print(result)
+	
+	
