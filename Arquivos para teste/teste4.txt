@@ -1,0 +1,17 @@
+result := 0
+fatN := 0
+
+for i := 0 to i < 15 do 
+  readint(n)
+  
+  fatN := n 
+
+  for k := n downto k > 1
+    fatN := fatN * (k-1)	
+  
+  endfor
+	
+   result := result + fatN
+
+endfor
+	
