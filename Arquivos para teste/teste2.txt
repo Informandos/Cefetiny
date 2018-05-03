@@ -12,7 +12,7 @@ if(media < 6)then
 	println
 	print(media)
 
-[else]
+else
 	print("aprovado")
 	println
 	print(media)
