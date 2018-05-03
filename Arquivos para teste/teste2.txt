@@ -7,7 +7,7 @@ readint(nota2)
 readint(nota3)
 readint(nota4)
 media := (nota1+nota2+nota3+nota4)/4
-if(media < 6)then
+if(media < 6) then
 	print("reprovado")
 	println
 	print(media)
