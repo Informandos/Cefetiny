@@ -1,0 +1,6 @@
+for i:=15 to i<=200 do
+	if(i mod 6 = 0) then
+		print(i^2)
+	endif
+endfor
+end
