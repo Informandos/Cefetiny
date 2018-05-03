@@ -1,0 +1,24 @@
+num := 0 
+ant := 1
+at := 1 
+pr:= 0
+
+print("Digite o numero de termos Fibonacci:")
+
+readint(num)
+
+for i := 1 to i <= num 
+	if(i == 1) then 
+		print("0 ")
+	else if(i == 2 || i == 3) then
+		 print("1 ")
+	else
+		pr := ant + at
+		ant := at
+		at := pr
+		print(" ")
+		print(pr)
+	endif
+endfor
+
+end
