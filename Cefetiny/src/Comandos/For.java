@@ -34,7 +34,7 @@ public class For {
          Object j = variaveis.getListaVariaveisvalor(nomeVariavel);
          int var=Integer.parseInt(j.toString());
          int i = comandos.getPosicao("for");
-         if(encrementador == "++"){
+         if(encrementador == "to"){
              while(ultimoValor != var){
                   if(comandos.getComandoPosisao(i) == "print"){
                     //chama comando print
@@ -66,7 +66,7 @@ public class For {
                  i++;
                  var++;
              }
-         }else if(encrementador == "--"){
+         }else if(encrementador == "downto"){
              while(ultimoValor != var){
                   if(comandos.getComandoPosisao(i) == "print"){
                     //chama comando print
