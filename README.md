@@ -1,7 +1,7 @@
 # Cefetiny
 Nome dos componentes do grupo: 
 Carlos Henrique Brasileiro,
-Eduardo Epiphânio Moreira,
+Eduardo Epiphanio Moreira,
 Felipe Linhares Afonso,
 Juliana Carvalho de Souza,
 Lucca Bessa Vieira.
