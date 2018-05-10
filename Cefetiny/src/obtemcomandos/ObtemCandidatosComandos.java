@@ -3,6 +3,7 @@ package obtemcomandos;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import memoria.MemoriaComando;
 import obtemcomandos.ExcessaoSintatica;
 
 public class ObtemCandidatosComandos {
@@ -11,9 +12,15 @@ public class ObtemCandidatosComandos {
     private static int posicaoAtualCursor = 0;
     private String strArquivo;
     private int indiceEnd;
+    private MemoriaComando comandos;
 
-    public ObtemCandidatosComandos() {
+    public ObtemCandidatosComandos(String strArquivo) throws ExcessaoSintatica {
+        this.setStrArquivo(strArquivo);
+        comandos = new MemoriaComando();
 
+        lerArquivoBuscandoCaracteres();
+
+        System.out.println("Fim da classe ObtemCandidatosComandos");
     }
 
     public void setStrArquivo(String strArquivo) {
@@ -22,14 +29,28 @@ public class ObtemCandidatosComandos {
 
     public boolean arquivoTemFim() {
         String palavra = "";
-        for (int indice = strArquivo.length(); indice > -1; indice++) {
+        System.out.println("Tamanho arquivo: " + strArquivo.length());
+        for (int indice = strArquivo.length() - 1; indice > -1; indice--) {
+
+            System.out.println("char: " + strArquivo.charAt(indice));
+
             if (!this.eEspaco(strArquivo.charAt(indice))) {
+                System.out.println("char: " + strArquivo.charAt(indice));
+
                 palavra += strArquivo.charAt(indice);
-            }
-            if (palavra.length() == 3) {
-                if (palavra.equals("dne")) {
-                    this.indiceEnd = indice;
-                    return true;
+                System.out.println("palavra: " + palavra);
+
+                if (indice > 2) {
+                    palavra += strArquivo.charAt(indice - 1);
+                    palavra += strArquivo.charAt(indice - 2);
+                    System.out.println("palavra: " + palavra);
+
+                    if (palavra.equals("dne")) {
+                        this.indiceEnd = indice - 2;
+                        return true;
+                    } else {
+                        return false;
+                    }
                 } else {
                     return false;
                 }
@@ -85,11 +106,11 @@ public class ObtemCandidatosComandos {
 
     public char previaDoisProxChar() {
         if (posicaoAtualCursor + 1 < strArquivo.length()) {
-            char c = strArquivo.charAt(posicaoAtualCursor);
+            char c = strArquivo.charAt(posicaoAtualCursor + 1);
             return c;
+        } else {
+            return '~';
         }
-        System.out.println("Indice >= tamanho arquivo");
-        return ';';
     }
 
     public int getPosicaoAtualCursor() {
@@ -98,7 +119,8 @@ public class ObtemCandidatosComandos {
 
     public boolean eEspaco(char teste) {
         int k = (int) teste;
-        return !(k != 9 && k != 32 && k != 10);
+        return k == 9 || k == 32 || k == 10 || k == 13;
+        //return !(k != 9 && k != 32 && k != 10 && k!=13);
     }
 
     public int indiceFechaAspas(int indiceChr) {
@@ -170,10 +192,12 @@ public class ObtemCandidatosComandos {
             }
             //quando sai do while quer dizer que a igualdade vale
             if (chrAtual == ')') {
-                fimExpressao = posicaoAtualCursor;
+                fimExpressao = posicaoAtualCursor - 2;
                 cmds.add("print");
+                comandos.pegaComandoLista("print");
                 //adicionando a expressao
                 cmds.add(strArquivo.substring(inicioExpressao, fimExpressao));
+                System.out.println("String detectada: " + strArquivo.substring(inicioExpressao, fimExpressao));
             } else {
                 throw new ExcessaoSintatica("Excessao Sintatica: esperado ')'");
             }
@@ -182,7 +206,7 @@ public class ObtemCandidatosComandos {
         }
 
     }
-    
+
     public void pulaEspaco() {
         while (this.eEspaco(this.getCharAtual())) {
             this.getNextChar();
@@ -198,6 +222,7 @@ public class ObtemCandidatosComandos {
 
     public void verificaPrintln() {
         if (this.eEspaco(this.getNextChar())) {
+            System.out.println("Eh mesmo println");
             cmds.add("println");
         }
     }
@@ -205,32 +230,47 @@ public class ObtemCandidatosComandos {
     public void verificaAtribuicao() throws ExcessaoSintatica {
 
         String expressao = "";
-        
+
         String variavel = obtemPalvraAnterior(posicaoAtualCursor - 2);
         //expressao ja começa um posicao antes do proximo char;
 
-        expressao = this.obtemExpressao();
+        //lembrando que o cursor atual esta no igual do sinal de atribuicao
+        expressao = this.retiraExpressao();
         cmds.add("Atrib");
         cmds.add(variavel);
+        System.out.println("Expressao obtida: " + expressao);
         cmds.add(expressao);
 
     }
 
-    public String obtemExpressao() {
+    /*public String obtemExpressao() {
         String expressao = "";
+        String auxExpressao = "";
         int inicioExp = this.getPosicaoAtualCursor();
         int fimExp = 0;
+        //Ignorando espacos apos o simbolo de atribuicao
+        this.pulaEspaco();
         //Para cada espaco, verificar os caracters que ele para obter o fim da expressao
         //constante (numero ou letra) ou parenteses fechando ) - espaco(s) >=0 - constante(numero ou letra) ou parenteses abindo ( ou ; --> fim expressao
+
         while (this.haProxChar()) {
-            if (this.eEspaco(this.getNextChar())) {
-                
+
+            System.out.println("Entrou no while do obtemExpressao");
+            char caracterExpressao = this.getNextChar();
+
+            if (this.eEspaco(caracterExpressao)) {
+                System.out.println("Entrou no if do obtemExpressao");
+                System.out.println("AuxExpressao: " + auxExpressao);
+
                 //String com palavra formado por caracteres anteriores ao igual;
                 String antEspaco = "";
-                
+
+                this.pulaEspaco();
+
                 while (this.haProxChar()) {
-                    if (strArquivo.charAt(posicaoAtualCursor-1) == ')' || this.eDigito(getCharAtual()) || this.eLetra(getCharAtual())) {
-                        if(this.haProxChar()){
+
+                    if (strArquivo.charAt(posicaoAtualCursor - 1) == ')' || this.eDigito(getCharAtual()) || this.eLetra(getCharAtual())) {
+                        if (this.haProxChar()) {
                             this.pulaEspaco(posicaoAtualCursor);
                             if (this.eDigito(this.getCharAtual()) || this.getCharAtual() == ';') {
                                 fimExp = this.getPosicaoAtualCursor();
@@ -238,10 +278,10 @@ public class ObtemCandidatosComandos {
                                 return expressao;
                             } else {
                                 //qualquer string diferente de or, mod, div, and ou de =, >, < <=, >=, <> ou ) deve finalizar a expressao, pois nao pode ser constante
-                                if(this.haProxChar()){
-                                    String operador = "" + strArquivo.charAt(posicaoAtualCursor + 1); 
-                                    if(operador != "=" && operador != ">" && operador != "<" && operador != ")"){
-                                        operador+= strArquivo.charAt(posicaoAtualCursor + 2);
+                                if (this.haProxChar()) {
+                                    String operador = "" + strArquivo.charAt(posicaoAtualCursor + 1);
+                                    if (operador != "=" && operador != ">" && operador != "<" && operador != ")") {
+                                        operador += strArquivo.charAt(posicaoAtualCursor + 2);
                                         operador += strArquivo.charAt(posicaoAtualCursor + 3);
                                         if (!"or ".equals(operador)) {
                                             operador += strArquivo.charAt(posicaoAtualCursor + 4);
@@ -261,7 +301,71 @@ public class ObtemCandidatosComandos {
                                 }
                             }
                         }
+                    } else {
+                        this.getNextChar();
                     }
+
+                }
+            } 
+        }
+        return expressao;
+    }*/
+
+    public boolean eLetraOuDigito(char c) {
+        return this.eLetra(c) && this.eDigito(c);
+    }
+
+    public String retiraExpressao() {
+        int iniExp, fimExp, possivelFim;
+        String expressao = "";
+        char charAtual;
+        char charAnteriorEspaco;
+        char charPosteriorEspaco;
+
+        this.pulaEspaco();
+
+        iniExp = this.getPosicaoAtualCursor();
+
+        while (this.haProxChar()) {
+            charAtual = this.getCharAtual();
+            if (!this.eEspaco(charAtual) && this.haProxChar()) {
+                this.getNextChar();
+            } else {
+                charAnteriorEspaco = this.strArquivo.charAt(this.getPosicaoAtualCursor() - 1);
+                possivelFim = this.getPosicaoAtualCursor() - 1;
+                this.pulaEspaco();
+                charPosteriorEspaco = this.strArquivo.charAt(this.getPosicaoAtualCursor());
+                if (charAnteriorEspaco == ')' && charPosteriorEspaco == '(') {
+                    //possivelFim detecta o indice antes do espaco, substring precisa de 1 a mais que o fim da expressao.
+                    fimExp = possivelFim+1;
+                    expressao = this.strArquivo.substring(iniExp, fimExp);
+                    
+                } else if (this.eLetraOuDigito(charAnteriorEspaco) && this.eLetraOuDigito(charPosteriorEspaco)) {
+                    //qualquer string diferente de or, mod, div, and deve finalizar a expressao, pois nao pode ser constante
+                    if (charPosteriorEspaco == 'o' || charPosteriorEspaco == 'm' || charPosteriorEspaco == 'd' || charPosteriorEspaco == 'a') {
+                        String operador = "" + charPosteriorEspaco;
+                        if (this.getPosicaoAtualCursor() + 2 < this.strArquivo.length()) {
+                            operador += this.getNextChar();
+                            operador += this.getNextChar();
+                            if (!"or ".equals(operador)) {
+                                //se nao for "or ", so pode ser "mod ", "div " ou "and "
+                                if (this.haProxChar()) {
+                                    operador += this.getNextChar();
+                                    if (!operador.equals("mod ") && !operador.equals("div ") && !operador.equals("and ")) {
+                                       fimExp = possivelFim+1;
+                                       expressao = this.strArquivo.substring(iniExp, fimExp);
+                                    }
+                                }
+
+                            }
+                        }
+                    } else {
+                        fimExp = possivelFim+1;
+                        expressao = this.strArquivo.substring(iniExp, fimExp);
+                    }
+                } else {
+                    fimExp = possivelFim+1;
+                    expressao = this.strArquivo.substring(iniExp, fimExp);
                 }
             }
         }
@@ -270,17 +374,19 @@ public class ObtemCandidatosComandos {
 
     public void verificaReadInt() throws ExcessaoSintatica {
         this.pulaEspaco();
-        if(this.getCharAtual()=='('){
+        if (this.getCharAtual() == '(') {
             pulaEspaco();
             String variavel = "";
-            while(getCharAtual()!=')' && !this.eEspaco(this.getCharAtual())){
-                variavel+= this.getCharAtual();
+            this.getNextChar();
+            while (getCharAtual() != ')' && !this.eEspaco(this.getCharAtual())) {
+                variavel += this.getCharAtual();
                 this.getNextChar();
             }
             cmds.add("ReadInt");
+            System.out.println("Variavel do readInt(): " + variavel);
             cmds.add(variavel);
-            
-        }else{
+
+        } else {
             throw new ExcessaoSintatica("Excessao Sintatica: esperado '('");
         }
     }
@@ -290,11 +396,11 @@ public class ObtemCandidatosComandos {
     }
 
     public void verificaFor() {
-        
+
     }
 
     public void verificaWhile() {
-        
+
     }
 
     public String obtemPalvraAnterior(int aux) throws ExcessaoSintatica {
@@ -324,41 +430,49 @@ public class ObtemCandidatosComandos {
             throw new ExcessaoSintatica("Excessao Sintatica: Arquivo sem fim");
         }
         String bufferPalavra = "";//palavra atual
-        
-        while(this.haProxChar()) {
+
+        while (this.haProxChar()) {
             char c = this.getNextChar();
             while (!eEspaco(c)) {
                 bufferPalavra += c;
+                System.out.println("Palavra: " + bufferPalavra);
                 switch (bufferPalavra) {
                     case "print": {
                         char c1 = this.previaProxChar();
                         char c2 = this.previaDoisProxChar();
+                        System.out.println("c1: " + c1 + " c2: " + c2);
                         if (c1 == 'l' && c2 == 'n') {
+                            System.out.println("Indo verificar println, como esperado");
                             this.getNextChar();
                             this.getNextChar();
                             verificaPrintln();
                         } else {
                             try {
+                                System.out.println("Indo verificar print");
                                 this.verificaPrint();
+
                             } catch (ExcessaoSintatica ex) {
                                 Logger.getLogger(ObtemCandidatosComandos.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     }
+                    break;
                     case "readint":
+                        System.out.println("INDO VERIFICAR READINT");
                         this.verificaReadInt();
                         break;
-                        
+
                     case ":=":
+                        System.out.println("Indo verificar atribuicao");
                         this.verificaAtribuicao();
                         break;
-                        
+
                     case "if":
                         break;
-                        
+
                     case "while":
                         break;
-                        
+
                     case "for":
                         break;
                 }
