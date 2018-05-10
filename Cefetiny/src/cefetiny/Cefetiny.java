@@ -2,7 +2,11 @@ package cefetiny;
 
 import java.io.IOException;
 import io.EntradaDados;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import memoria.MemoriaVariaveis;
+import obtemcomandos.ExcessaoSintatica;
+import obtemcomandos.ObtemCandidatosComandos;
 
 public class Cefetiny {
 
@@ -12,6 +16,12 @@ public class Cefetiny {
         EntradaDados entradaArquivo = new EntradaDados();
         entradaArquivo.lerArquivo("Arquivo_Texto.txt");
         System.out.println(entradaArquivo.getArquivo());
+        
+        try {
+            ObtemCandidatosComandos obtemComandos = new ObtemCandidatosComandos(entradaArquivo.getArquivo());
+        } catch (ExcessaoSintatica ex) {
+            Logger.getLogger(Cefetiny.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         MemoriaVariaveis memoria = new MemoriaVariaveis();
         memoria.setListaVariaveis("a",1);
