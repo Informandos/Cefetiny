@@ -6,11 +6,9 @@ public class analisadorSemantico{
     }
     
     public void editaExpressao(String expressao){
-        expressao.replaceAll("[0-9]", "n");
-        for(int i = 0; i<expressao.length();i++){
-            do{
-                
-            }while(expressao.charAt(i+1))
+        String expressaoEditada = expressao.replaceAll("[0-9]", "n");
+        for(int i = 0; i<expressaoEditada.length();i++){
+            
         }
     }
     
